@@ -55,6 +55,10 @@ function M.setup()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 	vim.lsp.set_log_level("debug")
+	local default_server_settings = {
+			capabilities = capabilities,
+			on_attach = on_attach
+	}
 	local servers = {
 		clangd = {
 			root_dir = function(fname)
@@ -73,7 +77,12 @@ function M.setup()
 			},
 			capabilities = capabilities,
 			on_attach = on_attach
-		}
+		},
+		svls = default_server_settings,
+		jsonls = default_server_settings,
+		gopls = default_server_settings,
+		hls = default_server_settings
+
 	}
 
 	mason_lspconfig.setup {
@@ -81,9 +90,9 @@ function M.setup()
 	}
 	-- nedev must get setup prior to lua language server
 	require('neodev').setup()
-	require('lspconfig').lua_ls.setup(servers['lua_ls'])
-	require('lspconfig').clangd.setup(servers['clangd'])
-	require('lspconfig').jsonls.setup { on_attach = on_attach }
+	for server,settings in pairs(servers) do
+		require('lspconfig')[server].setup(settings)
+	end
 end
 
 return M

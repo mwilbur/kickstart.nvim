@@ -13,10 +13,10 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 	local nvimtree_api = require('nvim-tree.api')
 	local wk = require("which-key")
 	local top_level = {
-		["<space>"] = { require('telescope.builtin').buffers, '[ ] Find existing buffers' },
+		["<space>"] = { function() require('telescope.builtin').buffers({ sort_lastused = true, sort_mru = true }) end, '[ ] Find existing buffers' },
 		["?"] = { require('telescope.builtin').oldfiles, '[?] Find recently opened files' },
 		['.'] = { nvimtree_api.tree.toggle, 'NvimTree' },
-		p = { require'telescope'.extensions.project.project, 'Open project' }
+		p = { require 'telescope'.extensions.project.project, 'Open project' }
 	}
 	local search_mapping = {
 		s = {
@@ -60,7 +60,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 	require('which-key').register {
 		['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
 		['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-		['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+		--['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
 		['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
 		['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
 		['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
