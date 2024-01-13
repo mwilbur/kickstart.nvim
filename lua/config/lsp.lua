@@ -66,7 +66,7 @@ function M.setup()
 			end,
 			capabilities = capabilities,
 			on_attach = on_attach,
-			cmd = { "clangd", "--log=verbose", "--query-driver=/mnt/sw/nt/MDM5010SA/build/arm-cortexa9_5.4-linux-gnueabihf/bin/arm-cortexa9_5.4-linux-gnueabihf-gcc"}
+			cmd = { "clangd", "--log=verbose"}
 		},
 		lua_ls = {
 			settings = {
@@ -81,7 +81,8 @@ function M.setup()
 		svls = default_server_settings,
 		jsonls = default_server_settings,
 		gopls = default_server_settings,
-		hls = default_server_settings
+--		hdl_checker = default_server_settings,
+		pylsp = default_server_settings,
 
 	}
 
@@ -93,6 +94,7 @@ function M.setup()
 	for server,settings in pairs(servers) do
 		require('lspconfig')[server].setup(settings)
 	end
+	require('lspconfig').hls.setup(default_server_settings)
 end
 
 return M

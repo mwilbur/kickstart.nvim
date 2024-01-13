@@ -154,7 +154,18 @@ function M.setup()
 			ft = { "go", 'gomod' },
 			build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
 		},
-		"ThePrimeagen/vim-be-good"
+		{
+			"ThePrimeagen/refactoring.nvim",
+			dependencies = {
+				"nvim-lua/plenary.nvim",
+				"nvim-treesitter/nvim-treesitter",
+			},
+			config = function()
+				require("refactoring").setup()
+			end,
+		},
+		"ThePrimeagen/vim-be-good",
+		"igankevich/mesonic"
 	}, {})
 	require("nvim-tree").setup({
 		update_focused_file = {
